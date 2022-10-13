@@ -1,4 +1,5 @@
 from .product_views import (
     ProductListView,
-    ProductDetailView
+    ProductDetailView,
+    ProductCreateView
     )
