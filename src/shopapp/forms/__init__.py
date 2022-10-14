@@ -1,1 +1,4 @@
-from .product_form import ProductForm
+from .product_form import (
+    ProductForm,
+    ProductSearchForm
+)

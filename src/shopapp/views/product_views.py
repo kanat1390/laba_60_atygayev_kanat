@@ -1,21 +1,25 @@
-from django.shortcuts import render
-from django.urls import reverse
 from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
+
 )
+
+from searchview.views import SearchView
 
 from shopapp.forms import ProductForm
 from shopapp.models import Product
 from shopapp.mixins import SuccessDetailUrlMixin, ExtraContextMixin, SuccessListUrlMixin
+from shopapp.forms import ProductSearchForm
 
 
-class ProductListView(ListView):
+class ProductListView(SearchView):
     model = Product
     template_name = 'shopapp/product/product_list.html'
+    form_class = ProductSearchForm
+    first_display_all_list = True
 
 
 class ProductDetailView(DetailView):

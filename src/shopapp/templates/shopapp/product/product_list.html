@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for product in product_list %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button class="btn btn-primary" type="submit">Найти</button>
+</form>
+{% for product in object_list %}
 <p><a href="{% url 'product-detail' product.pk %}">{{product.name}}</a></p>
 {% endfor %}
 {% endblock content %}
