@@ -20,6 +20,7 @@ class ProductListView(SearchView):
     template_name = 'shopapp/product/product_list.html'
     form_class = ProductSearchForm
     first_display_all_list = True
+    paginate_by = 2
 
 
 class ProductDetailView(DetailView):

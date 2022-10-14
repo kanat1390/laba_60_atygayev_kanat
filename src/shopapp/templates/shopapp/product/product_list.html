@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="" method="post">
+<form action="" method="post" id="search_form">
     {% csrf_token %}
     {% for field in form%}
     {{field}}
     {% endfor %}
     <button class="btn btn-primary" type="submit">Найти</button>
+    <input id="pagenation_page" type="hidden" name="page" />
 </form>
 {% for product in object_list %}
 <p><a href="{% url 'product-detail' product.pk %}">{{product.name}}</a></p>
 {% endfor %}
+<div class="pagination">
+    <span class="step-links d-flex gap-1">
+        {% if page_obj.has_previous %}
+        <button type="submit" class="page-btn page-link" style="min-width:100px;"
+            value="{{ page_obj.previous_page_number }}">previous</button>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <button type="submit" class="page-btn page-link" style="min-width:100px;"
+            value="{{ page_obj.next_page_number }}">next</button>
+        {% endif %}
+    </span>
+</div>
+<script>
+    $(function () {
+        $('.page-btn').click(function () {
+            var form1 = document.forms['search_form'];
+            var pageno = $(this).val();
+            $('#pagenation_page').val(pageno);
+            form1.submit();
+            return false;
+        });
+    })
+</script>
 {% endblock content %}
