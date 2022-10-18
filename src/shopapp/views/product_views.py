@@ -10,7 +10,7 @@ from django.views.generic import (
 from searchview.views import SearchView
 
 from shopapp.forms import ProductForm
-from shopapp.models import Product
+from shopapp.models import Product, ProductInBasket
 from shopapp.mixins import SuccessDetailUrlMixin, ExtraContextMixin, SuccessListUrlMixin
 from shopapp.forms import ProductSearchForm
 
@@ -20,7 +20,17 @@ class ProductListView(SearchView):
     template_name = 'shopapp/product/product_list.html'
     form_class = ProductSearchForm
     first_display_all_list = True
-    paginate_by = 2
+    paginate_by = 10
+    ordering = ['name', 'category__name']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        basket_list = ProductInBasket.objects.all()
+        context.update({
+            'basket_list': basket_list,
+            'basket_qty': len(basket_list),
+        })
+        return context
 
 
 class ProductDetailView(DetailView):

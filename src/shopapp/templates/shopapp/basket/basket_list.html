@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{% url 'product-list' %}" class="btn btn-secondary">Вернуться в магазин</a>
+<h2 class="text-center">Корзина</h2>
+<form action="{% url 'basket-confirm' %}" method="post">
+    {% csrf_token %}
+    <div class="d-flex justify-content-center gap-5">
+        <div>
+            <h4>Итого к оплате: {{ total_price }}</h4>
+            {% if basket_list %}
+            <h2 class="text-center mt-5">Запоните ваши данные</h2>
+            {% for field in form %}
+            {{ field }}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary mt-5">Оформить</button>
+            {% endif %}
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Наименование товара</th>
+                        <th scope="col">Количество</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Сумма</th>
+                        <th scope="col">Удалить</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for basket in basket_list %}
+                    <tr>
+                        <td>{{basket.product.name}}</td>
+                        <td>{{ basket.quantity }} шт</td>
+                        <td>{{ basket.product.price }}$</td>
+                        <td>{{ basket.total_price }}$</td>
+                        <td><a class="btn btn-danger rounded" href="{% url 'basket-delete' basket.pk %}">X</a></td>
+                    </tr>
+                    {% empty %}
+                    <p>Вы не добавили ни один продукт в корзину</p>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+{% endblock content %}

@@ -5,3 +5,5 @@ from .product_views import (
     ProductUpdateView,
     ProductDeleteView,
 )
+
+from .basket_views import ProductAddToBasket, BasketListView, ProductDeleteFromBasket, ProductBuyConfirm
