@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<a href="{% url 'product-list' %}" class="btn btn-secondary">Назад</a>
 <h3>{{ form_title }}</h3>
 <form action="" method="post">
     {% csrf_token %}
